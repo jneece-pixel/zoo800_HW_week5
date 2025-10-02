@@ -44,25 +44,35 @@ file.info(c("HW/Data/Output/fish.csv",
 ## Problem 3 ## 
 
 ## Task 1
-fish_output <- 
-  fish.csv |> 
+fish.csv |> 
   filter(Lake == c("Erie", "Michigan")) |>
     filter(Species == "Walleye" |Species ==  "Yellow Perch" | Species == "Smallmouth Bass") |>
-  select(Species, Lake, Year, Length_cm, Weight_g)
-
+  select(Species, Lake, Year, Length_cm, Weight_g) |>
 ## Task 2
-fish_output |> 
   group_by(Species) |> 
   mutate(Length_mm = Length_cm *10) |>
   mutate(Length_group = cut(Length_mm, 
                             breaks = c(0,200, 400, 600, 10000), 
                             labels = c("<200", "200-400", "400-600", ">600"))) |>
   group_by(Species, Length_group) |>
-  summarize(count = n())
-  
+  summarize(count = n()) #couldn't figure out how to print the count of species x lenght_group
+#while maintaining the pipeline, so I'm going to start a new one for the next task
+
 ## Task 3
-fish_output |>
+fish_output <- fish.csv |>
   group_by(Species, Year) |>
   summarize(mean.weight = mean(Weight_g), 
             median.weight = median(Weight_g), 
             sample.size = n())
+write.csv(fish_output, "HW/Data/Output/fish_output.csv")
+
+
+## Problem 4 ##
+
+multiple.files <- list.files("HW/Data/Multiple_files", full.names = TRUE)
+
+fish.all <- lapply(multiple.files, read.csv)
+fish.all.df <- bind_rows(fish.all)
+
+
+## Problem 5 ##
