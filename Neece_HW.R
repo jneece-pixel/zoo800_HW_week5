@@ -1,6 +1,6 @@
 ### QM Week 5: Coding in R III
 
-## Authors: 
+## Authors: Jillian Neece. Collaborated with Maddie Tedder
 
 ######################################
 
